@@ -1,0 +1,22 @@
+import spacy
+import emoji
+
+# загружаем модель языка
+nlp = spacy.load("en_core_web_sm")
+
+# получаем текст от пользователя
+text = input("Введите текст: ")
+
+# обработка текста с помощью модели spaCy
+doc = nlp(text)
+
+# проходимся по каждому слову в тексте
+for token in doc:
+    # проверяем, является ли слово существительным
+    if token.pos_ == "NOUN":
+        # заменяем слово на соответствующий ему эмодзи
+        emoji_word = emoji.emojize(":" + token.text + ":", use_aliases=True)
+        text = text.replace(token.text, emoji_word)
+
+# выводим измененный текст
+print(text)
